@@ -33,18 +33,15 @@ public class SecurityConfig{
         http
                 .csrf().disable()
                 .cors().disable()
-                .authorizeRequests()
+                .authorizeHttpRequests()
+                .requestMatchers("/auth_check").authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .headers().frameOptions().disable()
-                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
-                .httpBasic()
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

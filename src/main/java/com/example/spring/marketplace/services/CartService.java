@@ -2,20 +2,22 @@ package com.example.spring.marketplace.services;
 
 import com.example.spring.marketplace.entities.Product;
 import com.example.spring.marketplace.model.Cart;
-import com.example.spring.marketplace.model.CartItem;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class CartService {
-    private final Cart cart;
+    private Cart cart;
     private final ProductService productService;
 
+    @PostConstruct
+    public void init() {
+        cart = new Cart();
+    }
+
     @Autowired
-    public CartService(Cart cart, ProductService productService) {
-        this.cart = cart;
+    public CartService(ProductService productService) {
         this.productService = productService;
     }
 
@@ -24,7 +26,7 @@ public class CartService {
     }
 
     public void clearCart() {
-      cart.delete();
+        cart.delete();
     }
 
     public void deleteProductFromCart(Long id) {
@@ -36,11 +38,7 @@ public class CartService {
     }
 
     public void addProductToCart(Long id) {
-        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("error"));
+        Product product = productService.getProductById(id).orElseThrow(() -> new RuntimeException("Не удается добавить продукт с id в корзину: " + id));
         cart.addItemToCart(product);
-    }
-
-    public List<CartItem> findAllCartItems() {
-        return cart.getCartItemList();
     }
 }

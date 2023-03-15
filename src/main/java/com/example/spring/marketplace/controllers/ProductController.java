@@ -1,6 +1,7 @@
 package com.example.spring.marketplace.controllers;
 
-import com.example.spring.marketplace.entities.Product;
+import com.example.spring.marketplace.converters.ProductConverter;
+import com.example.spring.marketplace.dtos.ProductDto;
 import com.example.spring.marketplace.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,16 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductConverter productConverter;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductConverter productConverter) {
         this.productService = productService;
+        this.productConverter = productConverter;
     }
 
     @GetMapping
-    public List<Product> findAllProducts() {
-        return productService.findAllProducts();
+    public List<ProductDto> findAllProducts() {
+        return productService.findAllProducts().stream().map(productConverter::entityToProductDto).toList();
     }
 }

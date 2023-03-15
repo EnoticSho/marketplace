@@ -1,22 +1,21 @@
 package com.example.spring.marketplace.model;
 
 import com.example.spring.marketplace.entities.Product;
-import jakarta.annotation.PostConstruct;
-import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-@Component
-@Getter
 public class Cart {
-    private List<CartItem> cartItemList;
+    private final List<CartItem> cartItemList;
     private int totalCost;
 
-    @PostConstruct
-    public void init() {
+    public Cart() {
         cartItemList = new ArrayList<>();
+    }
+
+    public List<CartItem> getCartItemList() {
+         return Collections.unmodifiableList(cartItemList);
     }
 
     public void addItemToCart(Product product) {
@@ -65,5 +64,9 @@ public class Cart {
         for (CartItem cartItem : cartItemList) {
             totalCost += cartItem.getTotalPrice();
         }
+    }
+
+    public int getTotalCost() {
+        return totalCost;
     }
 }
