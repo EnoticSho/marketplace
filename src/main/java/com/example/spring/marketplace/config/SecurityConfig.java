@@ -34,7 +34,7 @@ public class SecurityConfig{
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth_check").authenticated()
+                .requestMatchers("/api/v1/order").authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()

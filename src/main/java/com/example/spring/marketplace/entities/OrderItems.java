@@ -29,4 +29,11 @@ public class OrderItems {
 
     @Column(name = "product_price")
     private int price;
+
+    public OrderItems(Product product, Order order, int count, int price) {
+        this.product = product;
+        this.order = order;
+        this.count = count;
+        this.price = price;
+    }
 }
