@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItems {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_items_id")
@@ -30,7 +30,7 @@ public class OrderItems {
     @Column(name = "product_price")
     private int price;
 
-    public OrderItems(Product product, Order order, int count, int price) {
+    public OrderItem(Product product, Order order, int count, int price) {
         this.product = product;
         this.order = order;
         this.count = count;

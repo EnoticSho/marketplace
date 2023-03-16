@@ -13,6 +13,6 @@ import java.util.List;
 public class OrderDto {
     private Long id;
     private String user;
-    private List<OrderItemsDto> itemsDtos;
+    private List<OrderItemDto> itemsDtos;
     private Date date;
 }

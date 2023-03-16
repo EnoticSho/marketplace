@@ -24,7 +24,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-    private List<OrderItems> items;
+    private List<OrderItem> items;
 
     @Column(name = "order_date")
     private Date date;
