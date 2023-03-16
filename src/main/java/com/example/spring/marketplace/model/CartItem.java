@@ -18,7 +18,6 @@ public class CartItem {
         totalPrice = quantity * pricePerCount;
     }
 
-
     public void changeQuantity(int inc) {
         quantity = quantity + inc;
         totalPrice = quantity * pricePerCount;

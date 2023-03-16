@@ -37,7 +37,8 @@ public class CartController {
     }
 
     @PutMapping("/increment")
-    public void changeQuantity(@RequestParam("productId") Long id, @RequestParam("inc") int inc) {
+    public void changeQuantity(@RequestParam("productId") Long id,
+                               @RequestParam("inc") int inc) {
         cartService.editProduct(id, inc);
     }
 }

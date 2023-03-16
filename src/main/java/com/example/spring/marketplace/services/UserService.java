@@ -33,7 +33,8 @@ public class UserService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("нет такого юзера"));
+        User user = findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Нет такого юзера с username: " + username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
