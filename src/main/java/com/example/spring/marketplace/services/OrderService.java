@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -44,13 +43,11 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public OrderDto getOrderByUser(User user) {
-        Order order = orderRepository.findByUser(user).orElseThrow(() -> new RuntimeException("не найдено"));
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(order.getId());
-        orderDto.setDate(order.getDate());
-        orderDto.setUser(order.getUser().getUsername());
-        orderDto.setItemsDtos(null);
-        return orderDto;
+    public List<OrderDto> getOrderByUser(User user) {
+        List<Order> list = orderRepository.findByUser(user).orElseThrow(() -> new RuntimeException("не найдено"));
+        return list.stream().map(o -> new OrderDto(o.getId(),
+                o.getUser().getUsername(),
+                null,
+                o.getDate())).toList();
     }
 }

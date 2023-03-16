@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -33,7 +34,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public OrderDto getOrderByUsername(Principal principal) {
+    public List<OrderDto> getOrderByUsername(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
         return orderService.getOrderByUser(user);
     }
