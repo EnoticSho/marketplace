@@ -1,0 +1,5 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /cart
+url: http://localhost:8080/core/api/v1/products/
