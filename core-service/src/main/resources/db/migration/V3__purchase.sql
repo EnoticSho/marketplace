@@ -1,9 +1,8 @@
 CREATE TABLE orders
 (
     order_id SERIAL PRIMARY KEY,
-    user_id BIGINT UNSIGNED NOT NULL,
-    order_date DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    username VARCHAR(255) NOT NULL,
+    order_date DATETIME NOT NULL
 );
 
 

@@ -1,9 +1,9 @@
-package com.example.market.core.controllers;
+package com.example.market.auth.controller;
 
 import com.example.market.api.dtos.JwtRequest;
 import com.example.market.api.dtos.JwtResponse;
-import com.example.market.core.utils.JwtTokenUtils;
-import com.example.market.core.services.UserService;
+import com.example.market.auth.services.UserService;
+import com.example.market.auth.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin("*")
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtils jwtTokenUtils;

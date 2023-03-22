@@ -1,39 +1,30 @@
 package com.example.market.core.controllers;
 
-import com.example.market.api.dtos.OrderDto;
-import com.example.market.core.entities.User;
 import com.example.market.core.services.OrderService;
-import com.example.market.core.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/order")
-@CrossOrigin("*")
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserService userService;
 
     @Autowired
-    public OrderController(OrderService orderService, UserService userService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.userService = userService;
     }
 
     @PostMapping
-    public void createOrder(Principal principal) {
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-        orderService.saveOrder(user);
+    public void createOrder(@RequestHeader String username) {
+        orderService.saveOrder(username);
     }
 
-    @GetMapping
-    public List<OrderDto> getOrderByUsername(Principal principal) {
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-        return orderService.getOrderByUser(user);
-    }
+//    @GetMapping
+//    public List<OrderDto> getOrderByUsername(@RequestHeader String username) {
+//        return orderService.getOrderByUser(username);
+//    }
 }

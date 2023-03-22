@@ -1,9 +1,7 @@
 angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $localStorage) {
 
-    const contextPath = 'http://localhost:8080/core/api/v1/';
-
     $scope.tryToAuth = function() {
-        $http.post(contextPath + 'auth', $scope.user)
+        $http.post('http://localhost:5555/auth/api/v1/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -50,38 +48,38 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     }
 
     $scope.loadProducts = function () {
-        $http.get(contextPath + 'products').then(function (response) {
+        $http.get('http://localhost:5555/core/api/v1/products').then(function (response) {
             $scope.productsList = response.data;
         });
     }
 
     $scope.loadCart = function () {
-        $http.get('http://localhost:8090/cart/api/v1/cart').then(function (response) {
+        $http.get('http://localhost:5555/cart/api/v1/cart').then(function (response) {
             $scope.cart = response.data;
         });
     }
 
     $scope.addToCart = function (productId) {
-        $http.post('http://localhost:8090/cart/api/v1/cart/' + productId).then(function () {
+        $http.post('http://localhost:5555/cart/api/v1/cart/' + productId).then(function () {
             $scope.loadCart();
         });
     }
 
     $scope.clearTheCart = function () {
-        $http.delete('http://localhost:8090/cart/api/v1/' + 'cart').then(function () {
+        $http.delete('http://localhost:5555/cart/api/v1/' + 'cart').then(function () {
             $scope.loadCart();
         });
     }
 
     $scope.deleteProductFromCart = function (productId) {
-        $http.delete('http://localhost:8090/cart/api/v1/' + 'cart/' + productId).then(function () {
+        $http.delete('http://localhost:5555/cart/api/v1/' + 'cart/' + productId).then(function () {
             $scope.loadCart();
         });
     }
 
     $scope.incrementQuantity = function (productId, inc) {
         $http({
-            url: 'http://localhost:8090/cart/api/v1/' + 'cart/increment',
+            url: 'http://localhost:5555/cart/api/v1/' + 'cart/increment',
             method: 'Put',
             params: {
                 productId: productId,
@@ -94,7 +92,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
 
     $scope.createOrder = function () {
         $http({
-            url: contextPath + 'order',
+            url: 'http://localhost:5555/core/api/v1/order',
             method: 'Post'
         }).then(function () {
             $scope.clearTheCart();

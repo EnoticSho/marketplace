@@ -1,4 +1,4 @@
-package com.example.market.core.entities;
+package com.example.market.auth.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

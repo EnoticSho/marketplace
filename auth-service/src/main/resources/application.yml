@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/marketplace?autoreconnect=true"
+    url: "jdbc:mysql://localhost:3306/marketplaceAuth?autoreconnect=true"
     password: "bestuser"
     username: "bestuser"
   jpa:
@@ -12,17 +12,13 @@ spring:
   flyway:
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/
-    schemas: marketplace
+    schemas: marketplaceAuth
     user: "bestuser"
     password: "bestuser"
 server:
-  port: 8080
+  port: 8180
   servlet:
-    context-path: /core
-
-integrations:
-  cart-service:
-    url: http://localhost:8090/cart
-    read-timeout: 10000
-    write-timeout: 2000
-    connect-timeout: 5000
+    context-path: /auth
+jwt:
+  secret: 46294A404E635266556A586E327235753778214125442A472D4B615064536756
+  jwtLifeTime: 36000000

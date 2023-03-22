@@ -15,6 +15,8 @@
         <module>cart-service</module>
         <module>api</module>
         <module>front-service</module>
+        <module>gateway</module>
+        <module>auth-service</module>
     </modules>
 
 </project>

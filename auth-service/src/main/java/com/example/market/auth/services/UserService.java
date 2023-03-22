@@ -1,8 +1,8 @@
-package com.example.market.core.services;
+package com.example.market.auth.services;
 
-import com.example.market.core.repositories.UserRepository;
-import com.example.market.core.entities.Role;
-import com.example.market.core.entities.User;
+import com.example.market.auth.entities.Role;
+import com.example.market.auth.entities.User;
+import com.example.market.auth.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

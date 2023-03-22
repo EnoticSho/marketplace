@@ -5,13 +5,13 @@ import java.util.List;
 
 public class OrderDto {
     private Long id;
-    private String user;
+    private String username;
     private List<OrderItemDto> itemsDtos;
     private Date date;
 
-    public OrderDto(Long id, String user, List<OrderItemDto> itemsDtos, Date date) {
+    public OrderDto(Long id, String username, List<OrderItemDto> itemsDtos, Date date) {
         this.id = id;
-        this.user = user;
+        this.username = username;
         this.itemsDtos = itemsDtos;
         this.date = date;
     }
@@ -27,12 +27,12 @@ public class OrderDto {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<OrderItemDto> getItemsDtos() {

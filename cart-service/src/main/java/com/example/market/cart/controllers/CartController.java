@@ -2,14 +2,12 @@ package com.example.market.cart.controllers;
 
 import com.example.market.api.dtos.CartDto;
 import com.example.market.cart.converter.CartConverter;
-import com.example.market.cart.model.Cart;
 import com.example.market.cart.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/cart")
-@CrossOrigin("*")
 public class CartController {
 
     private final CartService cartService;

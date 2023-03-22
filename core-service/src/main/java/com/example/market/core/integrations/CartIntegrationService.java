@@ -2,22 +2,23 @@ package com.example.market.core.integrations;
 
 import com.example.market.api.dtos.CartDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 public class CartIntegrationService {
-    private final RestTemplate restTemplate;
-    @Value("${url}")
-    private String url;
+    private final WebClient cartServiceWebClient;
 
     @Autowired
-    public CartIntegrationService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public CartIntegrationService(WebClient cartServiceWebClient) {
+        this.cartServiceWebClient = cartServiceWebClient;
     }
 
-    public CartDto getCard() {
-        return restTemplate.getForObject(url, CartDto.class);
+    public CartDto getCurrentCart() {
+        return cartServiceWebClient.get()
+                .uri("/api/v1/cart")
+                .retrieve()
+                .bodyToMono(CartDto.class)
+                .block();
     }
 }

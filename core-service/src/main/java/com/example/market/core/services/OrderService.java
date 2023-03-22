@@ -2,12 +2,10 @@ package com.example.market.core.services;
 
 import com.example.market.api.dtos.CartItemDto;
 import com.example.market.core.converters.OrderConverter;
-import com.example.market.api.dtos.OrderDto;
 import com.example.market.core.entities.Order;
+import com.example.market.core.entities.OrderItem;
 import com.example.market.core.integrations.CartIntegrationService;
 import com.example.market.core.repositories.OrderRepository;
-import com.example.market.core.entities.OrderItem;
-import com.example.market.core.entities.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +30,11 @@ public class OrderService {
     }
 
     @Transactional
-    public void saveOrder(User user) {
-        List<CartItemDto> cartItemList = cartIntegrationService.getCard().getCartItemList();
+    public void saveOrder(String username) {
+        List<CartItemDto> cartItemList = cartIntegrationService.getCurrentCart().getCartItemList();
         Order order = new Order();
         order.setDate(new Date());
-        order.setUser(user);
+        order.setUsername(username);
         List<OrderItem> orderItems = cartItemList.stream()
                 .map(item -> new OrderItem(
                         productService.getProductById(item.getId()).get(),
@@ -47,8 +45,8 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<OrderDto> getOrderByUser(User user) {
-        List<Order> list = orderRepository.findByUser(user).orElseThrow(() -> new RuntimeException("не найдено"));
-        return list.stream().map(orderConverter::entityToOrderDto).toList();
-    }
+//    public List<OrderDto> getOrderByUser(String username) {
+//        List<Order> list = orderRepository.findByUser(user).orElseThrow(() -> new RuntimeException("не найдено"));
+//        return list.stream().map(orderConverter::entityToOrderDto).toList();
+//    }
 }
