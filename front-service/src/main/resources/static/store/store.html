@@ -1,0 +1,22 @@
+<h1>Market</h1>
+<h3>Список продуктов</h3>
+<table class="table table-hover">
+  <tr>
+    <td>ID</td>
+    <td>Название</td>
+    <td>Цена</td>
+    <td>Действие</td>
+  </tr>
+  <tbody>
+  <tr ng-repeat="p in productsList">
+    <td>{{p.id}}</td>
+    <td>{{p.title}}</td>
+    <td>{{p.price}}</td>
+    <td>
+      <button type="button" class="btn btn-outline-success" ng-click="addToCart(p.id)">
+        Добавить в корзину
+      </button>
+  </tr>
+  </tbody>
+</table>
+<br>

@@ -1,4 +1,43 @@
-angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $localStorage) {
+(function () {
+    angular
+        .module('app', ['ngRoute', 'ngStorage'])
+        .config(config)
+        .run(run);
+
+    function config($routeProvider) {
+        $routeProvider
+            .when('/store', {
+                templateUrl: 'store/store.html',
+                controller: 'storeController'
+            })
+            .when('/cart', {
+                templateUrl: 'cart/carts.html',
+                controller: 'cartController'
+            })
+            .otherwise({
+                redirectTo: '/store'
+            });
+    }
+
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.marketUser) {
+            try {
+                let jwt = $localStorage.marketUser.token;
+                let payload = JSON.parse(atob(jwt.split('.')[1]));
+                let currentTime = parseInt(new Date().getTime() / 1000);
+                if (currentTime > payload.exp) {
+                    console.log("Token is expired!");
+                    delete $localStorage.marketUser;
+                    $http.defaults.headers.common.Authorization = '';
+                }
+            } catch (e) {
+            }
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketUser.token;
+        }
+    }
+})();
+
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage) {
 
     $scope.tryToAuth = function() {
         $http.post('http://localhost:5555/auth/api/v1/auth', $scope.user)
@@ -31,75 +70,4 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             return false;
         }
     };
-
-    if ($localStorage.marketUser) {
-        try {
-            let jwt = $localStorage.marketUser.token;
-            let payload = JSON.parse(atob(jwt.split('.')[1]));
-            let currentTime = parseInt(new Date().getTime() / 1000);
-            if (currentTime > payload.exp) {
-                console.log("Token is expired!");
-                delete $localStorage.marketUser;
-                $http.defaults.headers.common.Authorization = '';
-            }
-        } catch (e) {
-        }
-        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketUser.token;
-    }
-
-    $scope.loadProducts = function () {
-        $http.get('http://localhost:5555/core/api/v1/products').then(function (response) {
-            $scope.productsList = response.data;
-        });
-    }
-
-    $scope.loadCart = function () {
-        $http.get('http://localhost:5555/cart/api/v1/cart').then(function (response) {
-            $scope.cart = response.data;
-        });
-    }
-
-    $scope.addToCart = function (productId) {
-        $http.post('http://localhost:5555/cart/api/v1/cart/' + productId).then(function () {
-            $scope.loadCart();
-        });
-    }
-
-    $scope.clearTheCart = function () {
-        $http.delete('http://localhost:5555/cart/api/v1/' + 'cart').then(function () {
-            $scope.loadCart();
-        });
-    }
-
-    $scope.deleteProductFromCart = function (productId) {
-        $http.delete('http://localhost:5555/cart/api/v1/' + 'cart/' + productId).then(function () {
-            $scope.loadCart();
-        });
-    }
-
-    $scope.incrementQuantity = function (productId, inc) {
-        $http({
-            url: 'http://localhost:5555/cart/api/v1/' + 'cart/increment',
-            method: 'Put',
-            params: {
-                productId: productId,
-                inc: inc
-            }
-        }).then(function () {
-            $scope.loadCart();
-        });
-    }
-
-    $scope.createOrder = function () {
-        $http({
-            url: 'http://localhost:5555/core/api/v1/order',
-            method: 'Post'
-        }).then(function () {
-            $scope.clearTheCart();
-            $scope.loadCart();
-        })
-    }
-
-    $scope.loadCart();
-    $scope.loadProducts();
 });
