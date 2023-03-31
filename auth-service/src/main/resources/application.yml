@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/marketplaceAuth?autoreconnect=true"
+    password: "bestuser"
+    username: "bestuser"
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  flyway:
+    baseline-on-migrate: true
+    url: jdbc:mysql://localhost:3306/
+    schemas: marketplaceAuth
+    user: "bestuser"
+    password: "bestuser"
+server:
+  port: 8180
+  servlet:
+    context-path: /auth
+jwt:
+  secret: 46294A404E635266556A586E327235753778214125442A472D4B615064536756
+  jwtLifeTime: 36000000
