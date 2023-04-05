@@ -1,11 +1,11 @@
 package com.example.market.core.controllers;
 
+import com.example.market.api.dtos.OrderDto;
 import com.example.market.core.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -23,8 +23,8 @@ public class OrderController {
         orderService.saveOrder(username);
     }
 
-//    @GetMapping
-//    public List<OrderDto> getOrderByUsername(@RequestHeader String username) {
-//        return orderService.getOrderByUser(username);
-//    }
+    @GetMapping
+    public List<OrderDto> getOrderByUsername(@RequestHeader String username) {
+        return orderService.getOrderByUser(username);
+    }
 }

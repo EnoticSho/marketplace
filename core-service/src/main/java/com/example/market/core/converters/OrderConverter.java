@@ -19,7 +19,7 @@ public class OrderConverter {
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setUsername(order.getUsername());
-        orderDto.setItemsDtos(order.getItems().stream().map(orderItemConverter::entityToOrderItemDto).toList());
+        orderDto.setItemsDto(order.getItems().stream().map(orderItemConverter::entityToOrderItemDto).toList());
         orderDto.setDate(order.getDate());
         return orderDto;
     }

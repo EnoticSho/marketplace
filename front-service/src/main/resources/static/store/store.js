@@ -10,7 +10,8 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
     }
 
     $scope.addToCart = function (productId) {
-        $http.get(cartContextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId + "/add/" + productId).then(function () {
+        $http.get(cartContextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId + "/add/" + productId)
+            .then(function () {
         });
     }
 

@@ -14,6 +14,14 @@
                 templateUrl: 'cart/carts.html',
                 controller: 'cartController'
             })
+            .when('/order', {
+                templateUrl: 'order/order.html',
+                controller: 'orderController'
+            })
+            .when('/register', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
+            })
             .otherwise({
                 redirectTo: '/store'
             });

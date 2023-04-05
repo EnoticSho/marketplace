@@ -1,6 +1,7 @@
 package com.example.market.core.services;
 
 import com.example.market.api.dtos.CartItemDto;
+import com.example.market.api.dtos.OrderDto;
 import com.example.market.core.converters.OrderConverter;
 import com.example.market.core.entities.Order;
 import com.example.market.core.entities.OrderItem;
@@ -46,8 +47,8 @@ public class OrderService {
         cartIntegrationService.clear(username);
     }
 
-//    public List<OrderDto> getOrderByUser(String username) {
-//        List<Order> list = orderRepository.findByUser(user).orElseThrow(() -> new RuntimeException("не найдено"));
-//        return list.stream().map(orderConverter::entityToOrderDto).toList();
-//    }
+    public List<OrderDto> getOrderByUser(String username) {
+        List<Order> list = orderRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("не найдено"));
+        return list.stream().map(orderConverter::entityToOrderDto).toList();
+    }
 }
