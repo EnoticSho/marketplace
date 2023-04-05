@@ -3,6 +3,8 @@ package com.example.market.core.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "products")
 @Data
@@ -16,7 +18,7 @@ public class Product {
     private String title;
 
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -1,13 +1,19 @@
 package com.example.market.api.dtos;
 
+import java.math.BigDecimal;
+
 public class OrderItemDto {
     private Long id;
     private Long order_id;
     private String productName;
     private int quantity;
-    private int cost;
+    private BigDecimal cost;
 
-    public OrderItemDto(Long id, Long order_id, String productName, int quantity, int cost) {
+    public OrderItemDto(Long id,
+                        Long order_id,
+                        String productName,
+                        int quantity,
+                        BigDecimal cost) {
         this.id = id;
         this.order_id = order_id;
         this.productName = productName;
@@ -50,11 +56,11 @@ public class OrderItemDto {
         this.quantity = quantity;
     }
 
-    public int getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 }

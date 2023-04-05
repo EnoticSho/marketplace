@@ -1,10 +1,11 @@
 package com.example.market.api.dtos;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartDto {
     private List<CartItemDto> cartItemList;
-    private int totalCost;
+    private BigDecimal totalCost;
 
     public List<CartItemDto> getCartItemList() {
         return cartItemList;
@@ -14,11 +15,11 @@ public class CartDto {
         this.cartItemList = cartItemList;
     }
 
-    public int getTotalCost() {
+    public BigDecimal getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(int totalCost) {
+    public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
     }
 }

@@ -13,17 +13,22 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
-    @Autowired
-    private JwtUtil jwtUtil;
 
-    public JwtAuthFilter() {
+    private final JwtUtil jwtUtil;
+
+    @Autowired
+    public JwtAuthFilter(JwtUtil jwtUtil) {
         super(Config.class);
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
+            if (request.getHeaders().containsKey("username")) {
+                return this.onError(exchange, "username header is invalid", HttpStatus.BAD_REQUEST);
+            }
             if (!isAuthMissing(request)) {
                 final String token = getAuthHeader(request);
                 if (jwtUtil.isInvalid(token)) {

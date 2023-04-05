@@ -3,26 +3,29 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     const contextPath = 'http://localhost:5555/cart';
 
     $scope.loadCart = function () {
-        $http.get(contextPath + '/api/v1/cart').then(function (response) {
-            $scope.cart = response.data;
-        });
+        $http.get(contextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId)
+            .then(function (response) {
+                $scope.cart = response.data;
+            });
     }
 
     $scope.clearTheCart = function () {
-        $http.delete(contextPath + '/api/v1/' + 'cart').then(function () {
-            $scope.loadCart();
-        });
+        $http.delete(contextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId)
+            .then(function () {
+                $scope.loadCart();
+            });
     }
 
     $scope.deleteProductFromCart = function (productId) {
-        $http.delete(contextPath + '/api/v1/' + 'cart/' + productId).then(function () {
-            $scope.loadCart();
-        });
+        $http.delete(contextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId + productId)
+            .then(function () {
+                $scope.loadCart();
+            });
     }
 
     $scope.incrementQuantity = function (productId, inc) {
         $http({
-            url: contextPath + '/api/v1/cart/increment',
+            url: contextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId + '/increment',
             method: 'Put',
             params: {
                 productId: productId,

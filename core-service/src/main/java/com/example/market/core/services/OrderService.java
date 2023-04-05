@@ -31,7 +31,7 @@ public class OrderService {
 
     @Transactional
     public void saveOrder(String username) {
-        List<CartItemDto> cartItemList = cartIntegrationService.getCurrentCart().getCartItemList();
+        List<CartItemDto> cartItemList = cartIntegrationService.getCurrentCart(username).getCartItemList();
         Order order = new Order();
         order.setDate(new Date());
         order.setUsername(username);
@@ -43,6 +43,7 @@ public class OrderService {
                         item.getPricePerCount())).toList();
         order.setItems(orderItems);
         orderRepository.save(order);
+        cartIntegrationService.clear(username);
     }
 
 //    public List<OrderDto> getOrderByUser(String username) {

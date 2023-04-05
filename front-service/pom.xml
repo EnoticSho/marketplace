@@ -25,12 +25,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.webjars.bower/angular &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.webjars.bower</groupId>-->
-<!--            <artifactId>angular</artifactId>-->
-<!--            <version>1.8.3</version>-->
-<!--        </dependency>-->
-
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/angular -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>angular</artifactId>
+            <version>1.8.3</version>
+        </dependency>
     </dependencies>
 </project>

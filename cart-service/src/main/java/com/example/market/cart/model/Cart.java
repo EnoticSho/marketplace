@@ -2,20 +2,22 @@ package com.example.market.cart.model;
 
 import com.example.market.api.dtos.ProductDto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Cart {
     private final List<CartItem> cartItemList;
-    private int totalCost;
+    private BigDecimal totalCost;
 
     public Cart() {
         cartItemList = new ArrayList<>();
+        totalCost = new BigDecimal(0);
     }
 
     public List<CartItem> getCartItemList() {
-         return Collections.unmodifiableList(cartItemList);
+        return cartItemList;
     }
 
     public void addItemToCart(ProductDto product) {
@@ -31,7 +33,7 @@ public class Cart {
                 1,
                 product.getPrice());
         cartItemList.add(cartItem);
-        totalCost += cartItem.getTotalPrice();
+        totalCost = totalCost.add(cartItem.getTotalPrice());
     }
 
     public void editCartItem(Long id, int inc) {
@@ -50,7 +52,7 @@ public class Cart {
 
     public void delete() {
         cartItemList.clear();
-        totalCost = 0;
+        totalCost = BigDecimal.ZERO;
     }
 
     public void removeCartItem(Long id) {
@@ -60,13 +62,13 @@ public class Cart {
     }
 
     private void recalculate() {
-        totalCost = 0;
+        totalCost = BigDecimal.ZERO;
         for (CartItem cartItem : cartItemList) {
-            totalCost += cartItem.getTotalPrice();
+            totalCost = totalCost.add(cartItem.getTotalPrice());
         }
     }
 
-    public int getTotalCost() {
+    public BigDecimal getTotalCost() {
         return totalCost;
     }
 }

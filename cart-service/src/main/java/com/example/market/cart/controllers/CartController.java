@@ -1,10 +1,13 @@
 package com.example.market.cart.controllers;
 
 import com.example.market.api.dtos.CartDto;
+import com.example.market.api.dtos.StringResponse;
 import com.example.market.cart.converter.CartConverter;
 import com.example.market.cart.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -19,29 +22,54 @@ public class CartController {
         this.cartConverter = cartConverter;
     }
 
-    @GetMapping
-    public CartDto getCard() {
-        return cartConverter.EntityToCartDto(cartService.getCart());
+    @GetMapping("/generate_uuid")
+    public StringResponse generateUuid() {
+        return new StringResponse(UUID.randomUUID().toString());
     }
 
-    @PostMapping("/{id}")
-    public void addProductToCart(@PathVariable("id") Long id) {
-        cartService.addProductToCart(id);
+    @GetMapping("/{uuid}")
+    public CartDto getCard(@RequestHeader(name = "username", required = false) String username,
+                           @PathVariable String uuid) {
+        String targetUuid = getCartUuid(uuid, username);
+        return cartConverter.EntityToCartDto(cartService.getCart(targetUuid));
     }
 
-    @DeleteMapping
-    public void deleteCart() {
-        cartService.clearCart();
+    @GetMapping("/{uuid}/add/{id}")
+    public void addProductToCart(@RequestHeader(name = "username", required = false) String username,
+                                 @PathVariable String uuid,
+                                 @PathVariable("id") Long id) {
+        String targetUuid = getCartUuid(uuid, username);
+        cartService.addProductToCart(id, targetUuid);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProductFromCart(@PathVariable("id") Long id) {
-        cartService.deleteProductFromCart(id);
+    @DeleteMapping("/{uuid}")
+    public void deleteCart(@RequestHeader(name = "username", required = false) String username,
+                           @PathVariable String uuid) {
+        String targetUuid = getCartUuid(uuid, username);
+        cartService.clearCart(targetUuid);
     }
 
-    @PutMapping("/increment")
-    public void changeQuantity(@RequestParam("productId") Long id,
+    @DeleteMapping("/{uuid}/{id}")
+    public void deleteProductFromCart(@RequestHeader(name = "username", required = false) String username,
+                                      @PathVariable String uuid,
+                                      @PathVariable("id") Long id) {
+        String targetUuid = getCartUuid(uuid, username);
+        cartService.deleteProductFromCart(id, targetUuid);
+    }
+
+    @PutMapping("/{uuid}/increment")
+    public void changeQuantity(@RequestHeader(name = "username", required = false) String username,
+                               @PathVariable String uuid,
+                               @RequestParam("productId") Long id,
                                @RequestParam("inc") int inc) {
-        cartService.editProduct(id, inc);
+        String targetUuid = getCartUuid(uuid, username);
+        cartService.editProduct(id, inc, targetUuid);
+    }
+
+    private String getCartUuid(String uuid, String username) {
+        if (username != null) {
+            return username;
+        }
+        return uuid;
     }
 }

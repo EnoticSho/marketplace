@@ -1,11 +1,13 @@
 package com.example.market.api.dtos;
 
+import java.math.BigDecimal;
+
 public class CartItemDto {
     private Long id;
     private String title;
     private int quantity;
-    private int pricePerCount;
-    private int totalPrice;
+    private BigDecimal pricePerCount;
+    private BigDecimal totalPrice;
 
     public Long getId() {
         return id;
@@ -31,19 +33,19 @@ public class CartItemDto {
         this.quantity = quantity;
     }
 
-    public int getPricePerCount() {
+    public BigDecimal getPricePerCount() {
         return pricePerCount;
     }
 
-    public void setPricePerCount(int pricePerCount) {
+    public void setPricePerCount(BigDecimal pricePerCount) {
         this.pricePerCount = pricePerCount;
     }
 
-    public int getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }
