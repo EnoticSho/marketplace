@@ -1,20 +1,20 @@
 package com.example.market.api.dtos;
 
 public class StringResponse {
-    private String string;
+    private String value;
 
     public StringResponse() {
     }
 
     public StringResponse(String string) {
-        this.string = string;
+        this.value = string;
     }
 
-    public String getString() {
-        return string;
+    public String getValue() {
+        return value;
     }
 
-    public void setString(String string) {
-        this.string = string;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

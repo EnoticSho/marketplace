@@ -4,7 +4,6 @@ import com.example.market.api.dtos.ProductDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Cart {

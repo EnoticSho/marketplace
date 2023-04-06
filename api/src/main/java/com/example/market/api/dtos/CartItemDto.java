@@ -9,6 +9,17 @@ public class CartItemDto {
     private BigDecimal pricePerCount;
     private BigDecimal totalPrice;
 
+    public CartItemDto(Long id, String title, int quantity, BigDecimal pricePerCount, BigDecimal totalPrice) {
+        this.id = id;
+        this.title = title;
+        this.quantity = quantity;
+        this.pricePerCount = pricePerCount;
+        this.totalPrice = totalPrice;
+    }
+
+    public CartItemDto() {
+    }
+
     public Long getId() {
         return id;
     }

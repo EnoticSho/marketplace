@@ -5,6 +5,8 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.loadCart = function () {
         $http.get(contextPath + '/api/v1/cart/' + $localStorage.marketGuestCardId)
             .then(function (response) {
+                console.log("21")
+                console.log($localStorage.marketGuestCardId)
                 $scope.cart = response.data;
             });
     }
